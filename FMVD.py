@@ -11,6 +11,7 @@
 
 import pandas as pd
 import numpy as np
+import sklearn
 from sklearn.impute import SimpleImputer, KNNImputer
 from sklearn.experimental import enable_iterative_imputer
 from sklearn.impute import IterativeImputer
