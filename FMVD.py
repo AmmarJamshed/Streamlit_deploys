@@ -8,14 +8,12 @@
 
 # In[1]:
 
-
+import streamlit as st
 import pandas as pd
 import numpy as np
-from sklearn import impute
-from sklearn import experimental
-from impute import SimpleImputer, KNNImputer
-from experimental import enable_iterative_imputer
-from impute import IterativeImputer
+from sklearn.impute import SimpleImputer, KNNImputer
+from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import IterativeImputer
 
 # Sample DataFrame
 df = pd.DataFrame({
@@ -117,10 +115,6 @@ print(imputed_data_knn)
 
 # In[15]:
 
-
-import streamlit as st
-import pandas as pd
-from sklearn.impute import SimpleImputer
 
 # Function to fill missing values
 def fill_missing_values(data, method, value=None):
