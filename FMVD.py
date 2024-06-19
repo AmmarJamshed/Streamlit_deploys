@@ -7,7 +7,15 @@
 # 
 
 # In[1]:
+pip install scikit-learn
 
+import pandas as pd
+import numpy as np
+from sklearn import impute
+from sklearn import experimental
+from impute import SimpleImputer, KNNImputer
+from experimental import enable_iterative_imputer
+from impute import IterativeImputer
 
 # Sample DataFrame
 df = pd.DataFrame({
