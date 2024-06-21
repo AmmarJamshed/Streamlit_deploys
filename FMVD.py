@@ -116,7 +116,7 @@ print(imputed_data_knn)
 
 
 # Function to fill missing values
-def fill_missing_values(data, method, value=None):
+def fill_missing_values(data, columns, method, value=None):
     if method == 'Mean':
         imputer = SimpleImputer(strategy='mean')
     elif method == 'Median':
@@ -132,9 +132,15 @@ def fill_missing_values(data, method, value=None):
     else:
         st.error("Unsupported method")
         return data
-
-    filled_data = pd.DataFrame(imputer.fit_transform(data), columns=data.columns)
-    return filled_data
+    
+    try:
+        data[columns] = imputer.fit_transform(data[columns])
+    except Exception as e:
+        st.error(f"Error while filling missing values: {e}")
+        st.write("Data preview:")
+        st.write(data)
+        return data
+    return data
 
 
 # In[16]:
@@ -152,25 +158,29 @@ if uploaded_file is not None:
     st.write("Uploaded Data:")
     st.write(data)
 
+    # Select columns to fill missing values
+    all_columns = data.columns.tolist()
+    columns = st.multiselect("Select columns to fill missing values", options=all_columns, default=all_columns)
+
     # Select method to fill missing values
-method = st.selectbox(
+    method = st.selectbox(
         "Select a method to fill missing values",
         ('Mean', 'Median', 'Most Frequent', 'Constant')
     )
-# Input for constant value if method is 'Constant'
-constant_value = None
-if method == 'Constant':
-    constant_value = st.text_input("Enter a constant value to fill missing values")
+    # Input for constant value if method is 'Constant'
+    constant_value = None
+    if method == 'Constant':
+        constant_value = st.text_input("Enter a constant value to fill missing values")
 
-if st.button("Fill Missing Values"):
-    filled_data = fill_missing_values(data, method, constant_value)
-    st.write("Data after filling missing values:")
-    st.write(filled_data)
-# Download link for the filled dataset
-    st.download_button(
-    label="Download filled data as CSV",
-    data=filled_data.to_csv(index=False),
-    file_name='filled_data.csv',
-    mime='text/csv'
+    if st.button("Fill Missing Values"):
+        filled_data = fill_missing_values(data, columns, method, constant_value)
+        st.write("Data after filling missing values:")
+        st.write(filled_data)
+        # Download link for the filled dataset
+        st.download_button(
+            label="Download filled data as CSV",
+            data=filled_data.to_csv(index=False),
+            file_name='filled_data.csv',
+            mime='text/csv'
         )
 
