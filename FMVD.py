@@ -143,13 +143,6 @@ def fill_missing_values(data, method, value=None):
 # Streamlit app
 st.title("Fill Missing Values in Your Dataset")
 
-# Load and display images
-st.image("Imageww.png", caption="Your Image", use_column_width=True)
-st.image("image.png", caption="AI Datayard", use_column_width=True)
-
-# Add a hyperlink below the images
-st.markdown("[Visit AI Datayard](https://aidatayard.com/index.php?redirect=0)")
-
 # File uploader
 uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
 
