@@ -161,6 +161,12 @@ if uploaded_file is not None:
     # Select columns to fill missing values
     all_columns = data.columns.tolist()
     columns = st.multiselect("Select columns to fill missing values", options=all_columns, default=all_columns)
+        # Calculate the missing values count
+    missing_values = df.isnull().sum()
+    missing_values_df = pd.DataFrame(missing_values, columns=['Missing Values'])
+    
+    # Display the missing values count
+    st.write("Missing Values Count", missing_values_df)
 
     # Select method to fill missing values
     method = st.selectbox(
